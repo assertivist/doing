@@ -2,6 +2,7 @@
 require 'gli'
 require 'doing'
 require 'tempfile'
+require 'harvested'
 
 if RUBY_VERSION.to_f > 1.9
   Encoding.default_external = Encoding::UTF_8

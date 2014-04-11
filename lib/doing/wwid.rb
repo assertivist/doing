@@ -59,7 +59,16 @@ class WWID
           'count' => 10,
           'order' => "asc"
       }
+      @config['harvest'] ||={
+        'subdomain' => 'your_subdomain',
+        'username' => 'your_username',
+        'password' => 'your_password',
+        'default_project' => 1,
+        'default_template' => 1
+      }
     }
+
+    @harvest = harvest = Harvest.hardy_client(@config['harvest']['subdomain'], @config['harvest']['username'], @config['harvest']['password'])
 
     @doing_file = File.expand_path(config['doing_file'])
     @current_section = config['current_section']
@@ -269,6 +278,10 @@ class WWID
       entry['note'] = opt[:note]
     end
     @content[section]['items'].push(entry)
+
+    time_entry = Harvest::TimeEntry.new(:notes => title.strip.cap_first, :spent_at => Time.now, :project_id => @config["harvest"]["default_project"], :task_id => @config["harvest"]["default_task"])
+    time_entry = @harvest.time.create(time_entry)
+
   end
 
   def tag_last(opt={})
@@ -665,11 +678,19 @@ class WWID
 end
 
 
+#require 'time'
+#require 'date'
+#require 'yaml'
+#require 'pp'
+#require 'csv'
+#require 'tempfile'
+#require 'chronic'
+#require 'harvested'
 
+#DOING_CONFIG = "~/.doingrc"
 
-# infile = "~/Dropbox/nvALT2.2/?? What was I doing.md"
+#infile = "~/what-was-i-doing.md"
 
-# wwid = WWID.new(infile)
-
-# wwid.add_item("Getting freaky with wwid CLI","Currently",{:date => Time.now})
-# wwid.write(infile)
+#wwid = WWID.new(infile)
+#wwid.add_item("Getting freaky with wwid CLI","Currently",{:date => Time.now})
+#wwid.write(infile)
