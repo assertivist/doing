@@ -69,9 +69,18 @@ A basic configuration looks like this:
         template: '%date > %title%odnote'
         wrap_width: 50
     :include_notes: true
+    
+    harvest:
+        subdomain: 'your_harvest_subdomain',
+        username: 'your_harvest@login.com',
+        password: 'your_harvest_pw',
+        default_project: 1,
+        default_task: 1
 
 
 The config file is stored in "~/.doingrc", and is created on the first run. 
+
+For doing-harvest, make sure the config variables are correctly set after the first run. default_project and default_tasks are the Harvest IDs of a project and one task assigned to it.
 
 ### Doing file location
 
